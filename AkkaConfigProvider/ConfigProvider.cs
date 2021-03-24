@@ -9,6 +9,11 @@ namespace AkkaConfigProvider
     {
         private readonly IConfiguration _configuration;
         public string BaseDir { get; }
+
+        public ConfigProvider(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         public ConfigProvider(string baseDir, string filename)
         {
             _configuration = GetConfiguration(filename, baseDir);
@@ -25,6 +30,11 @@ namespace AkkaConfigProvider
             string baseDir = GetBaseDir();
             string defaultFilename = "appsettings.json";
             _configuration = GetConfiguration(defaultFilename, baseDir);
+        }
+
+        public bool IsBaseDirKnown()
+        {
+            return !string.IsNullOrEmpty(BaseDir);
         }
 
         private IConfiguration GetConfiguration(string filename, string baseDir)
